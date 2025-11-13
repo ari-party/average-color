@@ -47,16 +47,26 @@ function getAverageColor(img) {
   var r = 0;
   var g = 0;
   var b = 0;
+  var count = 0;
 
   for (var i = 0, l = data.length; i < l; i += 4) {
+    if (data[i+3] === 0) {
+      continue;
+    }
+
     r += data[i];
     g += data[i+1];
     b += data[i+2];
+    count++;
   }
 
-  r = Math.floor(r / (data.length / 4));
-  g = Math.floor(g / (data.length / 4));
-  b = Math.floor(b / (data.length / 4));
+  if (count === 0) {
+    return { r: 0, g: 0, b: 0 };
+  }
+
+  r = Math.floor(r / count);
+  g = Math.floor(g / count);
+  b = Math.floor(b / count);
 
   return { r: r, g: g, b: b };
 }
